@@ -5,7 +5,6 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/MIT
  */
 import * as parse5 from 'parse5';
-import { hasOwnProperty } from '@lwc/shared';
 
 import {
     CompilerDiagnostic,
@@ -54,6 +53,8 @@ import {
     IRText,
     LWCDirectiveDomMode,
     LWCDirectiveRenderMode,
+    TemplateExpression,
+    TemplateParseResult,
     LWCDirectives,
     TemplateIdentifier,
     TemplateParseResult,
