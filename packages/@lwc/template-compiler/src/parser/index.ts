@@ -441,10 +441,7 @@ export default function parse(source: string, state: State): TemplateParseResult
             return warnOnIRNode(ParserDiagnostics.LWC_DOM_INVALID_SLOT_ELEMENT, element);
         }
 
-        if (
-            lwcDomAttribute.type !== IRAttributeType.String ||
-            lwcDomAttribute.value !== 'manual'
-        ) {
+        if (lwcDomAttribute.type !== IRAttributeType.String || lwcDomAttribute.value !== 'manual') {
             return warnOnElement(ParserDiagnostics.LWC_DOM_INVALID_VALUE, element.__original, [
                 '"manual"',
             ]);
@@ -462,9 +459,33 @@ export default function parse(source: string, state: State): TemplateParseResult
 
         removeAttribute(element, LWC_DIRECTIVES.INNER_HTML);
 
-        // TODO: Add restrictions
+        if (isCustomElement(element)) {
+            return warnOnElement(
+                ParserDiagnostics.LWC_INNER_HTML_INVALID_CUSTOM_ELEMENT,
+                element.__original,
+                [`<${element.tag}>`]
+            );
+        }
+
+        if (element.tag === 'slot' || element.tag === 'template') {
+            return warnOnElement(
+                ParserDiagnostics.LWC_INNER_HTML_INVALID_ELEMENT,
+                element.__original
+            );
+        }
+
+        if (element.children.length > 0) {
+            return warnOnElement(
+                ParserDiagnostics.LWC_INNER_HTML_INVALID_CONTENTS,
+                element.__original
+            );
+        }
+
         if (lwcInnerHtmlDirective.type === IRAttributeType.Boolean) {
-            throw new Error('TODO');
+            return warnOnElement(
+                ParserDiagnostics.LWC_INNER_HTML_INVALID_VALUE,
+                element.__original
+            );
         }
 
         if (!state.secureDependencies.includes('sanitizeHtmlContent')) {
