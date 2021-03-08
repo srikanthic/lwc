@@ -38,19 +38,19 @@ describe('type conversion', () => {
         [true, 'true'],
         [42, '42'],
     ];
-    
-    // Element.innerHTML implementation is incorrect on IE11. Instead of removing the element 
+
+    // Element.innerHTML implementation is incorrect on IE11. Instead of removing the element
     // content when passing null, IE11 insert 'null' as the element text content.
     if (!process.env.COMPAT) {
         cases.unshift([null, '']);
     }
-    
+
     cases.forEach(([actual, expected]) => {
         it(`renders properly when passing type ${typeof actual}`, () => {
             const elm = createElement('x-inner-html', { is: XInnerHtml });
             elm.content = actual;
             document.body.appendChild(elm);
-    
+
             const div = elm.shadowRoot.querySelector('div');
             expect(div.innerHTML).toBe(expected);
         });
@@ -62,7 +62,7 @@ it('applies styles to injected content', (done) => {
     elm.content = '<b>Test</b>';
     document.body.appendChild(elm);
 
-    // When running with synthetic shadow a micro task is needed to for the MutationObserver to add 
+    // When running with synthetic shadow a micro task is needed to for the MutationObserver to add
     // the styling tokens. For IE11 specifically, we need to wait for a full task.
     setTimeout(() => {
         const b = elm.shadowRoot.querySelector('b');
