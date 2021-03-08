@@ -31,32 +31,44 @@ it('re-renders the content on update', () => {
     });
 });
 
-[
-    [null, ''],
-    [undefined, 'undefined'],
-    ['string', 'string'],
-    [true, 'true'],
-    [42, '42'],
-].forEach(([actual, expected]) => {
-    it(`renders properly when passing type ${typeof actual}`, () => {
-        const elm = createElement('x-inner-html', { is: XInnerHtml });
-        elm.content = actual;
-        document.body.appendChild(elm);
-
-        const div = elm.shadowRoot.querySelector('div');
-        expect(div.innerHTML).toBe(expected);
+describe('type conversion', () => {
+    const cases = [
+        [undefined, 'undefined'],
+        ['string', 'string'],
+        [true, 'true'],
+        [42, '42'],
+    ];
+    
+    // Element.innerHTML implementation is incorrect on IE11. Instead of removing the element 
+    // content when passing null, IE11 insert 'null' as the element text content.
+    if (!process.env.COMPAT) {
+        cases.unshift([null, '']);
+    }
+    
+    cases.forEach(([actual, expected]) => {
+        it(`renders properly when passing type ${typeof actual}`, () => {
+            const elm = createElement('x-inner-html', { is: XInnerHtml });
+            elm.content = actual;
+            document.body.appendChild(elm);
+    
+            const div = elm.shadowRoot.querySelector('div');
+            expect(div.innerHTML).toBe(expected);
+        });
     });
 });
 
-it('applies styles to injected content', () => {
+it('applies styles to injected content', (done) => {
     const elm = createElement('x-inner-html', { is: XInnerHtml });
     elm.content = '<b>Test</b>';
     document.body.appendChild(elm);
 
-    // A microtask is needed here to wait for the MutationObserver to process the injected content.
-    return Promise.resolve().then(() => {
+    // When running with synthetic shadow a micro task is needed to for the MutationObserver to add 
+    // the styling tokens. For IE11 specifically, we need to wait for a full task.
+    setTimeout(() => {
         const b = elm.shadowRoot.querySelector('b');
         const styles = window.getComputedStyle(b);
         expect(styles.borderBottomStyle).toContain('dashed');
+
+        done();
     });
 });
