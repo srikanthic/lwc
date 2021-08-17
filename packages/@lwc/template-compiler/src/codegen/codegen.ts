@@ -10,6 +10,7 @@ import { ResolvedConfig } from '../config';
 import * as t from '../shared/estree';
 import { IRElement, LWCDirectiveRenderMode } from '../shared/types';
 import { toPropertyName } from '../shared/utils';
+import { TEMPLATE_PARAMS } from "../shared/constants";
 
 type RenderPrimitive =
     | 'iterator'
@@ -70,6 +71,7 @@ export default class CodeGen {
 
     currentId = 0;
     currentKey = 0;
+    innerHtmlInstances = 0;
 
     usedApis: { [name: string]: t.Identifier } = {};
     usedSlots: { [name: string]: t.Identifier } = {};
@@ -205,6 +207,40 @@ export default class CodeGen {
 
     genBooleanAttributeExpr(bindExpr: t.Expression) {
         return t.conditionalExpression(bindExpr, t.literal(''), t.literal(null));
+    }
+
+    genSanitizedHtmlExpr(expr: t.Expression) {
+        const instance = this.innerHtmlInstances++;
+
+        return t.conditionalExpression(
+            t.binaryExpression(
+                '!==',
+                t.memberExpression(
+                    t.identifier(TEMPLATE_PARAMS.CONTEXT),
+                    t.identifier(`_rawHtml$${instance}`),
+                ),
+                t.assignmentExpression(
+                    '=',
+                    t.memberExpression(
+                        t.identifier(TEMPLATE_PARAMS.CONTEXT),
+                        t.identifier(`_rawHtml$${instance}`),
+                    ),
+                    expr,
+                )
+            ),
+            t.assignmentExpression(
+                '=',
+                t.memberExpression(
+                    t.identifier(TEMPLATE_PARAMS.CONTEXT),
+                    t.identifier(`_sanitizedHtml$${instance}`)
+                ),
+                t.callExpression(t.identifier('sanitizeHtmlContent'), [expr])
+            ),
+            t.memberExpression(
+                t.identifier(TEMPLATE_PARAMS.CONTEXT),
+                t.identifier(`_sanitizedHtml$${instance}`)
+            )
+        );
     }
 
     private _genUniqueIdentifier(name: string) {

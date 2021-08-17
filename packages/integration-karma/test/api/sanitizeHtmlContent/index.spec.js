@@ -30,6 +30,23 @@ it('receives the right parameters', () => {
     expect(LWC.sanitizeHtmlContent).toHaveBeenCalledWith(ACTUAL_CONTENT);
 });
 
+it('does not call sanitizeHtmlContent when raw value does not change', () => {
+    spyOn(LWC, 'sanitizeHtmlContent');
+
+    const elm = createElement('x-inner-html', { is: XInnerHtml });
+    elm.message = 'initial';
+    elm.content = ACTUAL_CONTENT;
+    document.body.appendChild(elm);
+    expect(LWC.sanitizeHtmlContent).toHaveBeenCalledTimes(1);
+
+    elm.message = 'modified';
+
+    return Promise.resolve().then(() => {
+        expect(LWC.sanitizeHtmlContent).toHaveBeenCalledTimes(1);
+        expect(elm.shadowRoot.querySelector('p').innerText).toBe('modified');
+    })
+});
+
 it('replace the original attribute value with the returned value', () => {
     LWC.sanitizeHtmlContent = () => ALTERNATIVE_CONTENT;
 

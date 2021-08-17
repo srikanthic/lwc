@@ -6,7 +6,12 @@ function tmpl($api, $cmp, $slotset, $ctx) {
       "div",
       {
         props: {
-          innerHTML: sanitizeHtmlContent("Hello <b>world</b>!"),
+          innerHTML:
+            $ctx._rawHtml$0 !== ($ctx._rawHtml$0 = "Hello <b>world</b>!")
+              ? ($ctx._sanitizedHtml$0 = sanitizeHtmlContent(
+                  "Hello <b>world</b>!"
+                ))
+              : $ctx._sanitizedHtml$0,
         },
         context: {
           lwc: {
@@ -21,7 +26,10 @@ function tmpl($api, $cmp, $slotset, $ctx) {
       "div",
       {
         props: {
-          innerHTML: sanitizeHtmlContent($cmp.greeting),
+          innerHTML:
+            $ctx._rawHtml$1 !== ($ctx._rawHtml$1 = $cmp.greeting)
+              ? ($ctx._sanitizedHtml$1 = sanitizeHtmlContent($cmp.greeting))
+              : $ctx._sanitizedHtml$1,
         },
         context: {
           lwc: {

@@ -467,7 +467,7 @@ function transform(codeGen: CodeGen): t.Expression {
             propsObj.properties.push(
                 t.property(
                     t.identifier('innerHTML'),
-                    t.callExpression(t.identifier('sanitizeHtmlContent'), [expr])
+                    codeGen.genSanitizedHtmlExpr(expr),
                 )
             );
         }
