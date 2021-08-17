@@ -214,6 +214,10 @@ export default class CodeGen {
 
         this.usedLwcApis.add('sanitizeHtmlContent');
 
+        // Example input: <div lwc:inner-html={foo}>
+        // Output: $ctx._rawHtml$0 !== ($ctx._rawHtml$0 = $cmp.foo)
+        //             ? ($ctx._sanitizedHtml$0 = sanitizeHtmlContent($cmp.foo))
+        //             : $ctx._sanitizedHtml$0
         return t.conditionalExpression(
             t.binaryExpression(
                 '!==',
