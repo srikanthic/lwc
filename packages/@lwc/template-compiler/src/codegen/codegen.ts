@@ -10,7 +10,7 @@ import { ResolvedConfig } from '../config';
 import * as t from '../shared/estree';
 import { IRElement, LWCDirectiveRenderMode } from '../shared/types';
 import { toPropertyName } from '../shared/utils';
-import { TEMPLATE_PARAMS } from "../shared/constants";
+import { TEMPLATE_PARAMS } from '../shared/constants';
 
 type RenderPrimitive =
     | 'iterator'
@@ -217,15 +217,15 @@ export default class CodeGen {
                 '!==',
                 t.memberExpression(
                     t.identifier(TEMPLATE_PARAMS.CONTEXT),
-                    t.identifier(`_rawHtml$${instance}`),
+                    t.identifier(`_rawHtml$${instance}`)
                 ),
                 t.assignmentExpression(
                     '=',
                     t.memberExpression(
                         t.identifier(TEMPLATE_PARAMS.CONTEXT),
-                        t.identifier(`_rawHtml$${instance}`),
+                        t.identifier(`_rawHtml$${instance}`)
                     ),
-                    expr,
+                    expr
                 )
             ),
             t.assignmentExpression(

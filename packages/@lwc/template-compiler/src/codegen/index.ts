@@ -465,10 +465,7 @@ function transform(codeGen: CodeGen): t.Expression {
                     : bindExpression(lwc.innerHTML, element);
 
             propsObj.properties.push(
-                t.property(
-                    t.identifier('innerHTML'),
-                    codeGen.genSanitizedHtmlExpr(expr),
-                )
+                t.property(t.identifier('innerHTML'), codeGen.genSanitizedHtmlExpr(expr))
             );
         }
 

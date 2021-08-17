@@ -44,7 +44,7 @@ it('does not call sanitizeHtmlContent when raw value does not change', () => {
     return Promise.resolve().then(() => {
         expect(LWC.sanitizeHtmlContent).toHaveBeenCalledTimes(1);
         expect(elm.shadowRoot.querySelector('p').innerText).toBe('modified');
-    })
+    });
 });
 
 it('replace the original attribute value with the returned value', () => {
