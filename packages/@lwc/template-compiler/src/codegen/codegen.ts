@@ -212,6 +212,8 @@ export default class CodeGen {
     genSanitizedHtmlExpr(expr: t.Expression) {
         const instance = this.innerHtmlInstances++;
 
+        this.usedLwcApis.add('sanitizeHtmlContent');
+
         return t.conditionalExpression(
             t.binaryExpression(
                 '!==',

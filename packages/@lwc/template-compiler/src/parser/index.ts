@@ -51,10 +51,7 @@ import {
     IRExpressionAttribute,
     IRNode,
     IRText,
-    LWCDirectiveDomMode,
     LWCDirectiveRenderMode,
-    TemplateExpression,
-    TemplateParseResult,
     LWCDirectives,
     TemplateIdentifier,
     TemplateParseResult,
@@ -486,10 +483,6 @@ export default function parse(source: string, state: State): TemplateParseResult
                 ParserDiagnostics.LWC_INNER_HTML_INVALID_VALUE,
                 element.__original
             );
-        }
-
-        if (!state.secureDependencies.includes('sanitizeHtmlContent')) {
-            state.secureDependencies.push('sanitizeHtmlContent');
         }
 
         lwcOpts.innerHTML = lwcInnerHtmlDirective.value;

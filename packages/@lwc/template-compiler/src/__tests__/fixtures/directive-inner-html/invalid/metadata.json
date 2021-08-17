@@ -1,19 +1,8 @@
 {
     "warnings": [
         {
-            "code": 1135,
-            "message": "LWC1135: Invalid lwc:inner-html usage on element \"{0}\". The directive can't be used on a element with content.",
-            "level": 1,
-            "location": {
-                "line": 3,
-                "column": 5,
-                "start": 69,
-                "length": 48
-            }
-        },
-        {
-            "code": 1134,
-            "message": "LWC1134: Invalid lwc:inner-html usage on element \"{0}\". The directive can't be used on a slot or a template element.",
+            "code": 1138,
+            "message": "LWC1138: Invalid lwc:inner-html usage on element \"{0}\". The directive can't be used on a slot or a template element.",
             "level": 1,
             "location": {
                 "line": 6,
@@ -23,8 +12,8 @@
             }
         },
         {
-            "code": 1133,
-            "message": "LWC1133: Invalid lwc:inner-html usage on element \"<x-foo>\". The directive can't be used on a custom element.",
+            "code": 1137,
+            "message": "LWC1137: Invalid lwc:inner-html usage on element \"<x-foo>\". The directive can't be used on a custom element.",
             "level": 1,
             "location": {
                 "line": 9,
@@ -34,8 +23,8 @@
             }
         },
         {
-            "code": 1134,
-            "message": "LWC1134: Invalid lwc:inner-html usage on element \"{0}\". The directive can't be used on a slot or a template element.",
+            "code": 1138,
+            "message": "LWC1138: Invalid lwc:inner-html usage on element \"{0}\". The directive can't be used on a slot or a template element.",
             "level": 1,
             "location": {
                 "line": 12,

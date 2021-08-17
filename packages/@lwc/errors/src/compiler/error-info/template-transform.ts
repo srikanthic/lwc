@@ -515,28 +515,28 @@ export const ParserDiagnostics = {
     },
 
     LWC_INNER_HTML_INVALID_CUSTOM_ELEMENT: {
-        code: 1133,
+        code: 1137,
         message:
             'Invalid lwc:inner-html usage on element "{0}". The directive can\'t be used on a custom element.',
         level: DiagnosticLevel.Error,
         url: '',
     },
     LWC_INNER_HTML_INVALID_ELEMENT: {
-        code: 1134,
+        code: 1138,
         message:
             'Invalid lwc:inner-html usage on element "{0}". The directive can\'t be used on a slot or a template element.',
         level: DiagnosticLevel.Error,
         url: '',
     },
     LWC_INNER_HTML_INVALID_CONTENTS: {
-        code: 1135,
+        code: 1139,
         message:
             'Invalid lwc:inner-html usage on element "{0}". The directive can\'t be used on a element with content.',
         level: DiagnosticLevel.Error,
         url: '',
     },
     LWC_INNER_HTML_INVALID_VALUE: {
-        code: 1136,
+        code: 1140,
         message:
             'Invalid lwc:inner-html usage on element "{0}". The directive binding can only be an expression or a string.',
         level: DiagnosticLevel.Error,
