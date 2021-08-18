@@ -439,9 +439,7 @@ export default function parse(source: string, state: State): TemplateParseResult
         }
 
         if (lwcDomAttribute.type !== IRAttributeType.String || lwcDomAttribute.value !== 'manual') {
-            return warnOnElement(ParserDiagnostics.LWC_DOM_INVALID_VALUE, element.__original, [
-                '"manual"',
-            ]);
+            return warnOnIRNode(ParserDiagnostics.LWC_DOM_INVALID_VALUE, element, ['"manual"']);
         }
 
         lwcOpts.dom = lwcDomAttribute.value;
@@ -457,27 +455,21 @@ export default function parse(source: string, state: State): TemplateParseResult
         removeAttribute(element, LWC_DIRECTIVES.INNER_HTML);
 
         if (isCustomElement(element)) {
-            return warnOnElement(
-                ParserDiagnostics.LWC_INNER_HTML_INVALID_CUSTOM_ELEMENT,
-                element.__original,
-                [`<${element.tag}>`]
-            );
+            return warnOnIRNode(ParserDiagnostics.LWC_INNER_HTML_INVALID_CUSTOM_ELEMENT, element, [
+                `<${element.tag}>`,
+            ]);
         }
 
         if (element.tag === 'slot' || element.tag === 'template') {
-            return warnOnElement(
-                ParserDiagnostics.LWC_INNER_HTML_INVALID_ELEMENT,
-                element.__original,
-                [`<${element.tag}>`]
-            );
+            return warnOnIRNode(ParserDiagnostics.LWC_INNER_HTML_INVALID_ELEMENT, element, [
+                `<${element.tag}>`,
+            ]);
         }
 
         if (lwcInnerHtmlDirective.type === IRAttributeType.Boolean) {
-            return warnOnElement(
-                ParserDiagnostics.LWC_INNER_HTML_INVALID_VALUE,
-                element.__original,
-                [`<${element.tag}>`]
-            );
+            return warnOnIRNode(ParserDiagnostics.LWC_INNER_HTML_INVALID_VALUE, element, [
+                `<${element.tag}>`,
+            ]);
         }
 
         lwcOpts.innerHTML = lwcInnerHtmlDirective.value;
@@ -882,11 +874,9 @@ export default function parse(source: string, state: State): TemplateParseResult
 
         // prevents lwc:inner-html to be used in an element with content
         if (element.lwc?.innerHTML && effectiveChildren.length > 0) {
-            return warnOnElement(
-                ParserDiagnostics.LWC_INNER_HTML_INVALID_CONTENTS,
-                element.__original,
-                [`<${element.tag}>`]
-            );
+            return warnOnIRNode(ParserDiagnostics.LWC_INNER_HTML_INVALID_CONTENTS, element, [
+                `<${element.tag}>`,
+            ]);
         }
     }
 
