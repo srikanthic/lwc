@@ -467,14 +467,16 @@ export default function parse(source: string, state: State): TemplateParseResult
         if (element.tag === 'slot' || element.tag === 'template') {
             return warnOnElement(
                 ParserDiagnostics.LWC_INNER_HTML_INVALID_ELEMENT,
-                element.__original
+                element.__original,
+                [`<${element.tag}>`]
             );
         }
 
         if (lwcInnerHtmlDirective.type === IRAttributeType.Boolean) {
             return warnOnElement(
                 ParserDiagnostics.LWC_INNER_HTML_INVALID_VALUE,
-                element.__original
+                element.__original,
+                [`<${element.tag}>`]
             );
         }
 
@@ -882,7 +884,8 @@ export default function parse(source: string, state: State): TemplateParseResult
         if (element.lwc?.innerHTML && effectiveChildren.length > 0) {
             return warnOnElement(
                 ParserDiagnostics.LWC_INNER_HTML_INVALID_CONTENTS,
-                element.__original
+                element.__original,
+                [`<${element.tag}>`]
             );
         }
     }

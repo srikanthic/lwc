@@ -452,7 +452,7 @@ function transform(codeGen: CodeGen): t.Expression {
         if (props) {
             for (const [key, value] of Object.entries(props)) {
                 propsObj.properties.push(
-                    t.property(t.identifier(key), computeAttrValue(value, element))
+                    t.property(t.literal(key), computeAttrValue(value, element))
                 );
             }
         }

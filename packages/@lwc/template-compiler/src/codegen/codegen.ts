@@ -209,6 +209,14 @@ export default class CodeGen {
         return t.conditionalExpression(bindExpr, t.literal(''), t.literal(null));
     }
 
+    /**
+     * This routine generates an expression that avoids
+     * computing the sanitized html of a raw html if it does not change
+     * between renders.
+     *
+     * @param expr
+     * @returns sanitizedHtmlExpr
+     */
     genSanitizedHtmlExpr(expr: t.Expression) {
         const instance = this.innerHtmlInstances++;
 
@@ -218,6 +226,11 @@ export default class CodeGen {
         // Output: $ctx._rawHtml$0 !== ($ctx._rawHtml$0 = $cmp.foo)
         //             ? ($ctx._sanitizedHtml$0 = sanitizeHtmlContent($cmp.foo))
         //             : $ctx._sanitizedHtml$0
+        //
+        // Note: In the case of iterations, when the lwc:inner-html bound value depends on the
+        //       iteration item, the generated expression won't be enough, and `sanitizeHtmlContent`
+        //       will be called every time because this expression is based on the specific template
+        //       usage of the lwc:inner-html, and in an iteration, usages are dynamically generated.
         return t.conditionalExpression(
             t.binaryExpression(
                 '!==',

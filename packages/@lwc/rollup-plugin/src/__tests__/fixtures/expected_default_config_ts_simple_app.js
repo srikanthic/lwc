@@ -53,7 +53,7 @@
         key: 0
       }, [api_custom_element("ts-foo", _tsFoo, {
         props: {
-          x: "1"
+          "x": "1"
         },
         key: 1
       }, [])])];

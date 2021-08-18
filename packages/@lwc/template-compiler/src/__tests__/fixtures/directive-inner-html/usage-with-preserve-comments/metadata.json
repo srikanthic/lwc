@@ -2,7 +2,7 @@
     "warnings": [
         {
             "code": 1139,
-            "message": "LWC1139: Invalid lwc:inner-html usage on element \"{0}\". The directive can't be used on a element with content.",
+            "message": "LWC1139: Invalid lwc:inner-html usage on element \"<div>\". The directive can't be used on a element with content.",
             "level": 1,
             "location": {
                 "line": 3,

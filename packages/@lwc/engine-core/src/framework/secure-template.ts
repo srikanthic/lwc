@@ -29,7 +29,7 @@ export function registerTemplate(tpl: Template): Template {
 }
 
 /**
- * EXPERIMENTAL: This function acts like a hook for Lightning Locker. Service and other similar
+ * EXPERIMENTAL: This function acts like a hook for Lightning Locker Service and other similar
  * libraries to sanitize vulnerable attributes.
  */
 export function sanitizeAttribute(
@@ -44,7 +44,7 @@ export function sanitizeAttribute(
 }
 
 /**
- * EXPERIMENTAL: This function acts like a hook for Lightning Locker. Service and other similar
+ * EXPERIMENTAL: This function acts like a hook for Lightning Locker Service and other similar
  * libraries to sanitize HTML content. This hook process the content passed via the template to
  * lwc:inner-html directive.
  */
