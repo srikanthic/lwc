@@ -222,6 +222,25 @@ export default class CodeGen {
 
         this.usedLwcApis.add('sanitizeHtmlContent');
 
+        // Optimization for static html.
+        if (t.isLiteral(expr)) {
+            return t.logicalExpression(
+                '||',
+                t.memberExpression(
+                    t.identifier(TEMPLATE_PARAMS.CONTEXT),
+                    t.identifier(`_sanitizedHtml$${instance}`)
+                ),
+                t.assignmentExpression(
+                    '=',
+                    t.memberExpression(
+                        t.identifier(TEMPLATE_PARAMS.CONTEXT),
+                        t.identifier(`_sanitizedHtml$${instance}`)
+                    ),
+                    t.callExpression(t.identifier('sanitizeHtmlContent'), [expr])
+                )
+            );
+        }
+
         // Example input: <div lwc:inner-html={foo}>
         // Output: $ctx._rawHtml$0 !== ($ctx._rawHtml$0 = $cmp.foo)
         //             ? ($ctx._sanitizedHtml$0 = sanitizeHtmlContent($cmp.foo))

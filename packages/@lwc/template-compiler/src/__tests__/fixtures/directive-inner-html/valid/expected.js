@@ -7,11 +7,10 @@ function tmpl($api, $cmp, $slotset, $ctx) {
       {
         props: {
           innerHTML:
-            $ctx._rawHtml$0 !== ($ctx._rawHtml$0 = "Hello <b>world</b>!")
-              ? ($ctx._sanitizedHtml$0 = sanitizeHtmlContent(
-                  "Hello <b>world</b>!"
-                ))
-              : $ctx._sanitizedHtml$0,
+            $ctx._sanitizedHtml$0 ||
+            ($ctx._sanitizedHtml$0 = sanitizeHtmlContent(
+              "Hello <b>world</b>!"
+            )),
         },
         context: {
           lwc: {
